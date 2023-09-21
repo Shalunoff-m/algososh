@@ -12,7 +12,7 @@ import { INumber } from './fibonacci-page-types';
 export const FibonacciPage: React.FC = () => {
   const [isLoad, setLoad] = useState<boolean>(false);
   const [userText, setUserText] = useState<string>('');
-  const [result, setResult] = useState<INumber[]>([]);
+  const [result, setResult] = useState<string[]>([]);
 
   const changeUserString = (evt: React.ChangeEvent<HTMLInputElement>) => {
     let { value } = evt.target;
@@ -43,9 +43,9 @@ export const FibonacciPage: React.FC = () => {
         />
       </div>
       <div className={styles.result}>
-        <Circle letter={'1'} state={ElementStates.Default} />
-        <Circle letter={'2'} state={ElementStates.Changing} />
-        <Circle letter={'3'} state={ElementStates.Modified} />
+        {result.map((el, i) => (
+          <Circle key={i} letter={el} index={i} />
+        ))}
       </div>
     </SolutionLayout>
   );

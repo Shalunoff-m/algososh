@@ -1,28 +1,27 @@
-import { IFibonacci, INumber } from '../fibonacci-page/fibonacci-page-types';
+import { SHORT_DELAY_IN_MS } from '../../constants/delays';
+import { IFibonacci } from '../fibonacci-page/fibonacci-page-types';
+import { timeDelay } from './delay';
 
-export const calculateFibonacci = ({
+export const calculateFibonacci = async ({
   userText,
   setLoad,
   setResult,
 }: IFibonacci) => {
   //   console.log(userText);
   const numberQuery = Number(userText);
-  const calculateArr = calculateFiboncacciArray(numberQuery);
-  console.log(calculateArr);
+  const baseArray = ['1', '1'];
+
+  for (let i = 2; i < numberQuery + 1; i++) {
+    const first = Number(baseArray[i - 1]);
+    const second = Number(baseArray[i - 2]);
+    const res = first + second;
+    baseArray.push(String(res));
+  }
+
+  setLoad(true);
+  for (let i = 0; i <= baseArray.length; i++) {
+    await timeDelay(SHORT_DELAY_IN_MS);
+    setResult(baseArray.slice(0, i + 1));
+  }
+  setLoad(false);
 };
-
-const calculateFiboncacciArray = (
-  num: number,
-  memo: Record<number, number> = {}
-): number => {
-  if (num in memo) return memo[num];
-
-  if (num <= 2) return 1;
-  memo[num] =
-    calculateFiboncacciArray(num - 1, memo) +
-    calculateFiboncacciArray(num - 2, memo);
-
-  return memo[num];
-};
-
-// 1,1,2,3,5
