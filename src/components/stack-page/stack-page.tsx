@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './stack-page.module.css';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
-import { Stack } from './stack-page-class';
+import { Stack } from './stack-class';
 import {
   addItem,
   clearStack,

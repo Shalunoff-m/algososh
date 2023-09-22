@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { SHORT_DELAY_IN_MS } from '../constants/delays';
 import { ElementStates } from '../types/element-states';
 import { timeDelay } from './delay';
-import { Stack } from '../components/stack-page/stack-page-class';
+import { Stack } from '../components/stack-page/stack-class';
 import { TItem } from '../components/stack-page/stack-page-types';
 
 // ДОБАВЛЕНИЕ ЭЛЕМЕНТА

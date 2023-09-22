@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './sorting-style.module.css';
+import styles from './sorting-page.module.css';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Direction } from '../../types/direction';
 import {

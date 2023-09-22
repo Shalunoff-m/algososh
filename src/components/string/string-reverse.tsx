@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './string.module.css';
+import styles from './string-page.module.css';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';

@@ -4,7 +4,7 @@ import { timeDelay } from './delay';
 import { SHORT_DELAY_IN_MS } from '../constants/delays';
 import { TArr } from '../components/sorting-page/sorting-page-types';
 
-// TODO Подумать над улучшениями алгоритма сортировок
+// BM Подумать над улучшениями алгоритма сортировок
 // СЛУЧАЙНЫЙ МАССИВ
 export const randomArr = (
   setSortArray: Dispatch<SetStateAction<TArr[]>>,
