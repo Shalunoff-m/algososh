@@ -1,5 +1,5 @@
-import { ElementStates } from '../../types/element-states';
-import { IDataGet } from '../string/string-interface';
+import { ElementStates } from '../types/element-states';
+import { IDataGet } from '../components/string/string-interface';
 import { timeDelay } from './delay';
 
 export const stringReverse = async ({

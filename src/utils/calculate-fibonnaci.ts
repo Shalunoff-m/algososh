@@ -1,5 +1,5 @@
-import { SHORT_DELAY_IN_MS } from '../../constants/delays';
-import { IFibonacci } from '../fibonacci-page/fibonacci-page-types';
+import { SHORT_DELAY_IN_MS } from '../constants/delays';
+import { IFibonacci } from '../components/fibonacci-page/fibonacci-page-types';
 import { timeDelay } from './delay';
 
 export const calculateFibonacci = async ({

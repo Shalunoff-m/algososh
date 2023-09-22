@@ -4,7 +4,7 @@ import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import classNames from 'classnames';
-import { stringReverse } from '../utils/reverse-string';
+import { stringReverse } from '../../utils/reverse-string';
 import { IString } from './string-interface';
 import { Circle } from '../ui/circle/circle';
 
