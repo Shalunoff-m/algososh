@@ -8,7 +8,7 @@ import {
   selectionSortDsc,
   sortingBubbleAsc,
   sortingBubbleDsc,
-} from '../../utils/sorting-array';
+} from '../../utils/logic-array';
 import { SortingRadioType, TArr } from './sorting-page-types';
 import { Button } from '../ui/button/button';
 import { RadioInput } from '../ui/radio-input/radio-input';

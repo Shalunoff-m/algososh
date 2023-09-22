@@ -6,7 +6,7 @@ import { Button } from '../ui/button/button';
 import classNames from 'classnames';
 import { Circle } from '../ui/circle/circle';
 import { ElementStates } from '../../types/element-states';
-import { calculateFibonacci } from '../../utils/calculate-fibonnaci';
+import { calculateFibonacci } from '../../utils/logic-fibonnaci';
 import { INumber } from './fibonacci-page-types';
 
 export const FibonacciPage: React.FC = () => {
