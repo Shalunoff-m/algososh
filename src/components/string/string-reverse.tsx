@@ -1,50 +1,52 @@
 import React, { useState } from 'react';
-import styles from './fibonacci-page.module.css';
+import styles from './string-page.module.css';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import classNames from 'classnames';
+import { stringReverse } from '../../utils/logic-string';
+import { IString } from './string-interface';
 import { Circle } from '../ui/circle/circle';
-import { ElementStates } from '../../types/element-states';
-import { calculateFibonacci } from '../../utils/logic-fibonnaci';
-import { INumber } from './fibonacci-page-types';
 
-export const FibonacciPage: React.FC = () => {
-  const [isLoad, setLoad] = useState<boolean>(false);
+export const StringComponent: React.FC = () => {
+  // Храним введенный текст в стейте
   const [userText, setUserText] = useState<string>('');
-  const [result, setResult] = useState<string[]>([]);
+  // Стейт для результата
+  const [result, setResult] = useState<IString[]>([]);
+  // Стейт лоадера
+  const [isLoad, setLoad] = useState<boolean>(false);
 
   const changeUserString = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    let { value } = evt.target;
-    if (Number(value) > 19) value = '19';
-    setUserText(value);
+    setUserText(evt.target.value);
   };
 
   const runCalculate = () => {
-    calculateFibonacci({ userText, setLoad, setResult });
+    stringReverse({
+      userText: userText,
+      setResult,
+      setLoad,
+    });
   };
 
   return (
-    <SolutionLayout title='Последовательность Фибоначчи'>
+    <SolutionLayout title='Строка'>
       <div className={classNames(styles.wrapper)}>
         <Input
-          min={1}
-          max={19}
-          value={userText}
+          maxLength={11}
           isLimitText={true}
-          type='number'
           onChange={changeUserString}
+          value={userText}
         />
         <Button
-          text='Рассчитать'
+          text='Развернуть'
           isLoader={isLoad}
           disabled={false}
           onClick={runCalculate}
         />
       </div>
       <div className={styles.result}>
-        {result.map((el, i) => (
-          <Circle key={i} letter={el} index={i} />
+        {result.map((element, i) => (
+          <Circle key={i} letter={element.element} state={element.color} />
         ))}
       </div>
     </SolutionLayout>
