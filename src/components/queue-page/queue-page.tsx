@@ -6,7 +6,7 @@ import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
-import { timeDelay } from '../../utils/delay';
+import { timeDelay } from '../../utils/time-delay';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 
 export const QueuePage: React.FC = () => {

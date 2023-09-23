@@ -1,4 +1,4 @@
-import { IQueue } from './queue-types';
+import { IQueue } from './queue-interface';
 
 export class Queue<T> implements IQueue<T> {
   private container: T[] = [];
