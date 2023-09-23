@@ -21,6 +21,10 @@ import { Circle } from '../ui/circle/circle';
 import { ArrowIcon } from '../ui/icons/arrow-icon';
 
 export const ListPage: React.FC = () => {
+  /* 
+  FIXME Можно лучше: если реакт сам может вывести тип, то можно его не писать. Как в этом случае useState<boolean>(false) тоже самое, что useState(false)
+   */
+
   // СТЕЙТЫ
   const [list] = useState(new List(example));
   // ---
@@ -88,6 +92,22 @@ export const ListPage: React.FC = () => {
       await timeDelay(SHORT_DELAY_IN_MS);
     }
     list.arr[end].color = ElementStates.Default;
+    /* FIXME  Можно лучше: В хуке useEffect (А также в любых функциях, что выполняют асинхронные действия) вызывать useState стооит только если компонент действительно существует. Иначе, если выйти из страницы с неоконченным выполнением алгоритма возникает такая ошибка:
+    
+    react_devtools_backend.js:4026 Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+  at StringComponent (http://localhost:3000/static/js/bundle.js:2603:84)
+    
+    Именно поэтому важно очищать все асинхронные запросы при размонтировании компонента. Это можно сделать примерно вот так:
+
+    useEffect(() ⇒ {
+    let isComponentMounted = true;
+    await someAsyncStuff(() ⇒ {
+    if (isComponentMounted ) doMagic()
+    })
+    return  () ⇒ {isComponentMounted  = false};
+    })
+
+    */
     setRoundTip({
       ...roundTip,
       value: list.arr[end].value,

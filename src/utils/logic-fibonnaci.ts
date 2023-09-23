@@ -18,6 +18,8 @@ export const calculateFibonacci = async ({
     baseArray.push(String(res));
   }
 
+  /* FIXME Надо исправить: всю логику рендера и присвоение стоит писать уже в самом компоненте или в функциях, которые не реализуют другую логику. calculateFibonacci должен возвращать только шаги последовательности так как это его задача, а само отображение тут реализовываться не должно*/
+
   setLoad(true);
   for (let i = 0; i <= baseArray.length; i++) {
     await timeDelay(SHORT_DELAY_IN_MS);

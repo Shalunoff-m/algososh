@@ -7,6 +7,9 @@ export const stringReverse = async ({
   setResult,
   setLoad,
 }: IDataGet) => {
+  /* 
+  FIXME По аналогии стоит вернуть шаги алгоритма по которым пройдется компонент и просто отрисует с задержкой
+   */
   // Создаем массив объектов, с индивидуальным типом
   const elements = userText
     .split('')

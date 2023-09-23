@@ -4,7 +4,6 @@ import { timeDelay } from './time-delay';
 import { SHORT_DELAY_IN_MS } from '../constants/delays';
 import { TArr } from '../components/sorting-page/sorting-page-types';
 
-// BM Подумать над улучшениями алгоритма сортировок
 // СЛУЧАЙНЫЙ МАССИВ
 export const randomArr = (
   setSortArray: Dispatch<SetStateAction<TArr[]>>,
@@ -12,6 +11,11 @@ export const randomArr = (
 ) => {
   const randomArr = [];
   const lenLimit = Math.floor(Math.random() * (17 - 3 + 1)) + 3;
+
+  /* 
+FIXME По аналогии и с остальными функциями. Так мы делаем их хорошо тестируемыми и независимыми
+ */
+
   for (let i = 0; i <= lenLimit; i++) {
     randomArr.push({
       value: Math.floor(Math.random() * 100),
@@ -23,6 +27,9 @@ export const randomArr = (
 
 // ---------------------------------
 // МЕТОДЫ СОРТИРОВКИ
+/* 
+FIXME Можно лучше: мне кажется не стоит копипастить почти весь код для ASC и DESC направлений. Это можно передать как аргумент функции
+ */
 export const selectionSortAsc = async (
   arr: TArr[],
   setSortArray: Dispatch<SetStateAction<TArr[]>>,

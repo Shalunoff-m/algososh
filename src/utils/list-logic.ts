@@ -44,7 +44,6 @@ export const addItemIndex = async (
   setOperationStarted(false);
 };
 
-// TODO Дописать удаление...
 // Удаление через индекс
 export const removeItemIndex = async (
   setStart: Dispatch<SetStateAction<boolean>>,
