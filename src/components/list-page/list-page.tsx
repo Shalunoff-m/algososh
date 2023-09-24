@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import styles from './list-page.module.css';
 import { timeDelay } from '../../utils/time-delay';
@@ -24,7 +24,7 @@ export const ListPage: React.FC = () => {
   /* 
   [x]  Можно лучше: если реакт сам может вывести тип, то можно его не писать. Как в этом случае useState<boolean>(false) тоже самое, что useState(false)
    */
-
+  const [iscompMounted, setComponentMounted] = useState(false);
   // СТЕЙТЫ
   const [list] = useState(new List(example));
   // ---
@@ -49,6 +49,30 @@ export const ListPage: React.FC = () => {
     position: -1,
   });
 
+  /* [x] Можно лучше: В хуке useEffect (А также в любых функциях, что выполняют асинхронные действия) вызывать useState стооит только если компонент действительно существует. Иначе, если выйти из страницы с неоконченным выполнением алгоритма возникает такая ошибка:
+    
+    react_devtools_backend.js:4026 Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+  at StringComponent (http://localhost:3000/static/js/bundle.js:2603:84)
+    
+    Именно поэтому важно очищать все асинхронные запросы при размонтировании компонента. Это можно сделать примерно вот так:
+
+    useEffect(() ⇒ {
+    let isComponentMounted = true;
+    await someAsyncStuff(() ⇒ {
+    if (isComponentMounted ) doMagic()
+    })
+    return  () ⇒ {isComponentMounted  = false};
+    })
+
+    */
+
+  useEffect(() => {
+    setComponentMounted(true);
+    return () => {
+      setComponentMounted(false);
+    };
+  }, []);
+
   // ХЕНДЛЕРЫ
   // Ввод индекса
   const changeIndexHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,53 +92,42 @@ export const ListPage: React.FC = () => {
 
   // Анимация добавления
   const addAnim = async (num: number, end: number) => {
-    for (let i = 0; i <= end; i++) {
-      setRoundTip({
-        ...roundTip,
-        value: userValue,
-        position: i,
-      });
-      await timeDelay(SHORT_DELAY_IN_MS);
-      list.arr[num].color = ElementStates.Changing;
-      if (num < end) {
-        num++;
+    if (iscompMounted) {
+      for (let i = 0; i <= end; i++) {
+        setRoundTip({
+          ...roundTip,
+          value: userValue,
+          position: i,
+        });
+        await timeDelay(SHORT_DELAY_IN_MS);
+        list.arr[num].color = ElementStates.Changing;
+        if (num < end) {
+          num++;
+        }
+        setListArr([...list.arr]);
       }
-      setListArr([...list.arr]);
     }
   };
 
   // Анимация Удаление
   const removeAnim = async (end: number) => {
-    setIsStart(true);
-    for (let i = 0; i <= end; i++) {
-      list.arr[i].color = ElementStates.Changing;
-      setListArr([...list.arr]);
+    if (iscompMounted) {
+      setIsStart(true);
+      for (let i = 0; i <= end; i++) {
+        list.arr[i].color = ElementStates.Changing;
+        setListArr([...list.arr]);
+        await timeDelay(SHORT_DELAY_IN_MS);
+      }
+      list.arr[end].color = ElementStates.Default;
+
+      setRoundTip({
+        ...roundTip,
+        value: list.arr[end].value,
+        position: end,
+      });
       await timeDelay(SHORT_DELAY_IN_MS);
+      setIsStart(false);
     }
-    list.arr[end].color = ElementStates.Default;
-    /* [ ] Можно лучше: В хуке useEffect (А также в любых функциях, что выполняют асинхронные действия) вызывать useState стооит только если компонент действительно существует. Иначе, если выйти из страницы с неоконченным выполнением алгоритма возникает такая ошибка:
-    
-    react_devtools_backend.js:4026 Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-  at StringComponent (http://localhost:3000/static/js/bundle.js:2603:84)
-    
-    Именно поэтому важно очищать все асинхронные запросы при размонтировании компонента. Это можно сделать примерно вот так:
-
-    useEffect(() ⇒ {
-    let isComponentMounted = true;
-    await someAsyncStuff(() ⇒ {
-    if (isComponentMounted ) doMagic()
-    })
-    return  () ⇒ {isComponentMounted  = false};
-    })
-
-    */
-    setRoundTip({
-      ...roundTip,
-      value: list.arr[end].value,
-      position: end,
-    });
-    await timeDelay(SHORT_DELAY_IN_MS);
-    setIsStart(false);
   };
 
   return (
