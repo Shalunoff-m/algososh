@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './string-page.module.css';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Input } from '../ui/input/input';
@@ -7,6 +7,8 @@ import classNames from 'classnames';
 import { stringReverse } from '../../utils/logic-string';
 import { IString } from './string-interface';
 import { Circle } from '../ui/circle/circle';
+import { timeDelay } from '../../utils/time-delay';
+import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 
 export const StringComponent: React.FC = () => {
   // Храним введенный текст в стейте
@@ -20,12 +22,17 @@ export const StringComponent: React.FC = () => {
     setUserText(evt.target.value);
   };
 
-  const runCalculate = () => {
-    stringReverse({
+  const runCalculate = async () => {
+    const steps = stringReverse({
       userText: userText,
       setResult,
       setLoad,
     });
+    for (const step in steps) {
+      await timeDelay(SHORT_DELAY_IN_MS);
+      setResult(steps[step]);
+      // console.log();
+    }
   };
 
   return (
