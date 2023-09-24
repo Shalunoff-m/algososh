@@ -4,10 +4,8 @@ import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Direction } from '../../types/direction';
 import {
   randomArr,
-  selectionSortAsc,
-  selectionSortDsc,
-  sortingBubbleAsc,
-  sortingBubbleDsc,
+  selectionSort,
+  sortingBubble,
 } from '../../utils/logic-array';
 import { SortingRadioType, TArr } from './sorting-page-types';
 import { Button } from '../ui/button/button';
@@ -17,11 +15,8 @@ import { Column } from '../ui/column/column';
 export const SortingPage: React.FC = () => {
   // СТЕЙТЫ
   const [workArr, setWorkArr] = useState<TArr[]>([]);
-
-  const [radioType, setRadioType] = useState<SortingRadioType>(
-    SortingRadioType.SelectionSort
-  );
-  const [sortType, setSortType] = useState<Direction>();
+  const [radioType, setRadioType] = useState<SortingRadioType | null>(null);
+  const [sortType, setSortType] = useState<Direction | null>(null);
   const [isLoad, setLoad] = useState<boolean>(false);
   const [isLoadAsc, setLoadAsc] = useState<boolean>(false);
   const [isLoadDesc, setLoadDesc] = useState<boolean>(false);
@@ -29,10 +24,64 @@ export const SortingPage: React.FC = () => {
   // ИНИЦИАЛИЗАЦИЯ
   useEffect(() => {
     setNewArray();
-    return () => {
-      return;
-    };
   }, []);
+
+  useEffect(() => {
+    // СОРТИРОВКА ВЫБОРОМ ПО ВОЗРАСТАНИЮ
+    if (
+      sortType === Direction.Ascending &&
+      radioType === SortingRadioType.SelectionSort
+    ) {
+      console.log('сортировка выбором, по возрастанию');
+      selectionSort(
+        Direction.Ascending,
+        workArr,
+        setWorkArr,
+        setLoad,
+        setLoadAsc
+      );
+    }
+    // СОРТИРОВКА ВЫБОРОМ ПО УБЫВАНИЮ
+    else if (
+      sortType === Direction.Descending &&
+      radioType === SortingRadioType.SelectionSort
+    ) {
+      console.log('сортировка выбором, по убыванию');
+      selectionSort(
+        Direction.Descending,
+        workArr,
+        setWorkArr,
+        setLoad,
+        setLoadDesc
+      );
+    }
+    // СОРТИРОВКА ПУЗЫРЬКОМ ПО ВОЗРАСТАНИЮ
+    else if (
+      sortType === Direction.Ascending &&
+      radioType === SortingRadioType.Bubble
+    ) {
+      sortingBubble(
+        Direction.Ascending,
+        workArr,
+        setWorkArr,
+        setLoad,
+        setLoadAsc
+      );
+    }
+    // СОРТИРОВКА ПУЗЫРЬКОМ ПО УБЫВАНИЮ
+    else if (
+      sortType === Direction.Descending &&
+      radioType === SortingRadioType.Bubble
+    ) {
+      sortingBubble(
+        Direction.Descending,
+        workArr,
+        setWorkArr,
+        setLoad,
+        setLoadDesc
+      );
+    }
+  }, [sortType]);
 
   const setNewArray = () => {
     const tempArr = randomArr();
@@ -48,32 +97,8 @@ export const SortingPage: React.FC = () => {
     setRadioType(SortingRadioType.Bubble);
   };
 
-  const onSelectSortType = (sort: Direction) => {
+  const onSelectSortType = async (sort: Direction) => {
     setSortType(sort);
-    if (
-      sortType === Direction.Ascending &&
-      radioType === SortingRadioType.SelectionSort
-    ) {
-      selectionSortAsc(workArr, setWorkArr, setLoad, setLoadAsc);
-    }
-    if (
-      sortType === Direction.Descending &&
-      radioType === SortingRadioType.SelectionSort
-    ) {
-      selectionSortDsc(workArr, setWorkArr, setLoad, setLoadDesc);
-    }
-    if (
-      sortType === Direction.Ascending &&
-      radioType === SortingRadioType.Bubble
-    ) {
-      sortingBubbleAsc(workArr, setWorkArr, setLoad, setLoadAsc);
-    }
-    if (
-      sortType === Direction.Descending &&
-      radioType === SortingRadioType.Bubble
-    ) {
-      sortingBubbleDsc(workArr, setWorkArr, setLoad, setLoadDesc);
-    }
   };
 
   // ВЫВОД
@@ -97,7 +122,9 @@ export const SortingPage: React.FC = () => {
         <div className={styles.button_wrapper}>
           <Button
             text='По возрастанию'
-            onClick={() => onSelectSortType(Direction.Ascending)}
+            onClick={() => {
+              onSelectSortType(Direction.Ascending);
+            }}
             sorting={Direction.Ascending}
             isLoader={isLoadAsc}
             disabled={isLoad}
@@ -106,8 +133,8 @@ export const SortingPage: React.FC = () => {
             text='По убыванию'
             onClick={() => onSelectSortType(Direction.Descending)}
             sorting={Direction.Descending}
-            disabled={isLoad}
             isLoader={isLoadDesc}
+            disabled={isLoad}
           />
         </div>
         <div>
