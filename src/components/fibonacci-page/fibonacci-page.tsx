@@ -5,9 +5,9 @@ import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import classNames from 'classnames';
 import { Circle } from '../ui/circle/circle';
-import { ElementStates } from '../../types/element-states';
-import { calculateFibonacci } from '../../utils/logic-fibonnaci';
-import { INumber } from './fibonacci-page-types';
+import { calcFibonacci } from '../../utils/logic-fibonnaci';
+import { timeDelay } from '../../utils/time-delay';
+import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 
 export const FibonacciPage: React.FC = () => {
   const [isLoad, setLoad] = useState<boolean>(false);
@@ -20,8 +20,15 @@ export const FibonacciPage: React.FC = () => {
     setUserText(value);
   };
 
-  const runCalculate = () => {
-    calculateFibonacci({ userText, setLoad, setResult });
+  const renderResult = async () => {
+    let result: string[] = calcFibonacci({ userText, setLoad, setResult });
+
+    setLoad(true);
+    for (let i = 0; i <= result.length; i++) {
+      await timeDelay(SHORT_DELAY_IN_MS);
+      setResult(result.slice(0, i + 1));
+    }
+    setLoad(false);
   };
 
   return (
@@ -39,7 +46,7 @@ export const FibonacciPage: React.FC = () => {
           text='Рассчитать'
           isLoader={isLoad}
           disabled={false}
-          onClick={runCalculate}
+          onClick={renderResult}
         />
       </div>
       <div className={styles.result}>

@@ -16,7 +16,7 @@ import { Column } from '../ui/column/column';
 
 export const SortingPage: React.FC = () => {
   // СТЕЙТЫ
-  const [createArray, setCreateArray] = useState<TArr[]>([]);
+  const [workArr, setWorkArr] = useState<TArr[]>([]);
 
   const [radioType, setRadioType] = useState<SortingRadioType>(
     SortingRadioType.SelectionSort
@@ -28,11 +28,16 @@ export const SortingPage: React.FC = () => {
 
   // ИНИЦИАЛИЗАЦИЯ
   useEffect(() => {
-    randomArr(setCreateArray, createArray);
+    setNewArray();
     return () => {
       return;
     };
   }, []);
+
+  const setNewArray = () => {
+    const tempArr = randomArr();
+    setWorkArr(tempArr);
+  };
 
   // ХЕНДЛЕРЫ
   const onChangeRadioChoise = () => {
@@ -49,25 +54,25 @@ export const SortingPage: React.FC = () => {
       sortType === Direction.Ascending &&
       radioType === SortingRadioType.SelectionSort
     ) {
-      selectionSortAsc(createArray, setCreateArray, setLoad, setLoadAsc);
+      selectionSortAsc(workArr, setWorkArr, setLoad, setLoadAsc);
     }
     if (
       sortType === Direction.Descending &&
       radioType === SortingRadioType.SelectionSort
     ) {
-      selectionSortDsc(createArray, setCreateArray, setLoad, setLoadDesc);
+      selectionSortDsc(workArr, setWorkArr, setLoad, setLoadDesc);
     }
     if (
       sortType === Direction.Ascending &&
       radioType === SortingRadioType.Bubble
     ) {
-      sortingBubbleAsc(createArray, setCreateArray, setLoad, setLoadAsc);
+      sortingBubbleAsc(workArr, setWorkArr, setLoad, setLoadAsc);
     }
     if (
       sortType === Direction.Descending &&
       radioType === SortingRadioType.Bubble
     ) {
-      sortingBubbleDsc(createArray, setCreateArray, setLoad, setLoadDesc);
+      sortingBubbleDsc(workArr, setWorkArr, setLoad, setLoadDesc);
     }
   };
 
@@ -108,14 +113,14 @@ export const SortingPage: React.FC = () => {
         <div>
           <Button
             text='Новый массив'
-            onClick={() => randomArr(setCreateArray, createArray)}
+            onClick={() => setNewArray()}
             extraClass={styles.button_arr}
             disabled={isLoad}
           />
         </div>
       </div>
       <div className={styles.columns_list}>
-        {createArray?.map((item, i) => (
+        {workArr?.map((item, i) => (
           <Column key={i} index={item.value} state={item.color} />
         ))}
       </div>
