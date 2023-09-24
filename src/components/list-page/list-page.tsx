@@ -31,17 +31,17 @@ export const ListPage: React.FC = () => {
   const [userValue, setUserValue] = useState<string>('');
   const [userIndexValue, setInputIndexState] = useState<string>('');
   // ---
-  const [isAddToHead, setAddToHead] = useState<boolean>(false);
-  const [isRemoveFromHead, setRemoveFromHead] = useState<boolean>(false);
-  const [isAddToTail, setAddToTail] = useState<boolean>(false);
-  const [isRemoveFromTail, setRemoveFromTail] = useState<boolean>(false);
-  const [isAddIndex, setAddIndex] = useState<boolean>(false);
-  const [isRemoveIndex, setRemoveIndex] = useState<boolean>(false);
+  const [isAddToHead, setAddToHead] = useState(false);
+  const [isRemoveFromHead, setRemoveFromHead] = useState(false);
+  const [isAddToTail, setAddToTail] = useState(false);
+  const [isRemoveFromTail, setRemoveFromTail] = useState(false);
+  const [isAddIndex, setAddIndex] = useState(false);
+  const [isRemoveIndex, setRemoveIndex] = useState(false);
   // ---
-  const [isStart, setIsStart] = useState<boolean>(false);
-  const [isBottom, setBottom] = useState<boolean>(false);
+  const [isStart, setIsStart] = useState(false);
+  const [isBottom, setBottom] = useState(false);
   // ---
-  const [disableBtn, setDisableBtn] = useState<boolean>(false);
+  const [disableBtn, setDisableBtn] = useState(false);
   const [listArr, setListArr] = useState<TListElement[]>(list.arr);
   const [roundTip, setRoundTip] = useState<TListElement>({
     value: '',
