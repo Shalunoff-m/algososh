@@ -22,7 +22,7 @@ import { ArrowIcon } from '../ui/icons/arrow-icon';
 
 export const ListPage: React.FC = () => {
   /* 
-  [ ]  Можно лучше: если реакт сам может вывести тип, то можно его не писать. Как в этом случае useState<boolean>(false) тоже самое, что useState(false)
+  [x]  Можно лучше: если реакт сам может вывести тип, то можно его не писать. Как в этом случае useState<boolean>(false) тоже самое, что useState(false)
    */
 
   // СТЕЙТЫ

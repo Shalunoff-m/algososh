@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
-import { SHORT_DELAY_IN_MS } from '../constants/delays';
-import { ElementStates } from '../types/element-states';
-import { timeDelay } from './time-delay';
-import { Stack } from '../components/stack-page/stack-class';
-import { TItem } from '../components/stack-page/stack-page-types';
+import { Stack } from './stack-class';
+import { TItem } from './stack-page-types';
+import { SHORT_DELAY_IN_MS } from '../../constants/delays';
+import { ElementStates } from '../../types/element-states';
+import { timeDelay } from '../../utils/time-delay';
 
 // ДОБАВЛЕНИЕ ЭЛЕМЕНТА
 /* 
-[ ] Можно лушче: такие специфичные для компонента функции лучше держать рядом с компонентом. К примеру в файле utils.ts так их быстрее будет искать
+[x] Можно лушче: такие специфичные для компонента функции лучше держать рядом с компонентом. К примеру в файле utils.ts так их быстрее будет искать
  */
 export const addItem = async (
   setAddLoad: Dispatch<SetStateAction<boolean>>,
@@ -33,7 +33,7 @@ export const deleteItem = async (
   stack: Stack<TItem>
 ) => {
   /* 
-  [ ] Отлично! Тут данная функция вынесена к месту. Она реализует конкретную анимацию и ее не нужно тестировать так как stack.pop(); можно тестировать отдельно unit тестами
+  [x] Отлично! Тут данная функция вынесена к месту. Она реализует конкретную анимацию и ее не нужно тестировать так как stack.pop(); можно тестировать отдельно unit тестами
    */
 
   setRemoveLoad(true);

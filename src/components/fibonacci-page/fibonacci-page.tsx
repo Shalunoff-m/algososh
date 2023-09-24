@@ -10,7 +10,7 @@ import { timeDelay } from '../../utils/time-delay';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 
 export const FibonacciPage: React.FC = () => {
-  const [isLoad, setLoad] = useState<boolean>(false);
+  const [isLoad, setLoad] = useState(false);
   const [userText, setUserText] = useState<string>('');
   const [result, setResult] = useState<string[]>([]);
 

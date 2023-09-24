@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import styles from './stack-page.module.css';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Stack } from './stack-class';
-import {
-  addItem,
-  clearStack,
-  deleteItem,
-  takeTop,
-} from '../../utils/logic-stack';
+import { addItem, clearStack, deleteItem, takeTop } from './utils';
 import { TItem } from './stack-page-types';
 import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
@@ -18,8 +13,8 @@ export const StackPage: React.FC = () => {
   const [stack] = useState(new Stack<TItem>());
   const [stackArr, setStackArray] = useState<TItem[]>(stack.arr);
   const [inputState, setInputState] = useState<string>('');
-  const [isAddLoad, setAddLoad] = useState<boolean>(false);
-  const [isRemoveLoad, setRemoveLoad] = useState<boolean>(false);
+  const [isAddLoad, setAddLoad] = useState(false);
+  const [isRemoveLoad, setRemoveLoad] = useState(false);
 
   // ХЕНДЛЕРЫ
   const changeInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {

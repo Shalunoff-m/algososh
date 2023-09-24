@@ -17,9 +17,9 @@ export const SortingPage: React.FC = () => {
   const [workArr, setWorkArr] = useState<TArr[]>([]);
   const [radioType, setRadioType] = useState<SortingRadioType | null>(null);
   const [sortType, setSortType] = useState<Direction | null>(null);
-  const [isLoad, setLoad] = useState<boolean>(false);
-  const [isLoadAsc, setLoadAsc] = useState<boolean>(false);
-  const [isLoadDesc, setLoadDesc] = useState<boolean>(false);
+  const [isLoad, setLoad] = useState(false);
+  const [isLoadAsc, setLoadAsc] = useState(false);
+  const [isLoadDesc, setLoadDesc] = useState(false);
 
   // ИНИЦИАЛИЗАЦИЯ
   useEffect(() => {

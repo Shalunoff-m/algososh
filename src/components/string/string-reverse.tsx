@@ -16,7 +16,7 @@ export const StringComponent: React.FC = () => {
   // Стейт для результата
   const [result, setResult] = useState<IString[]>([]);
   // Стейт лоадера
-  const [isLoad, setLoad] = useState<boolean>(false);
+  const [isLoad, setLoad] = useState(false);
 
   const changeUserString = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setUserText(evt.target.value);
