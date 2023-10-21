@@ -39,6 +39,12 @@ export const selectionSort = async (
   setLoad(true);
   setLoadType(true);
 
+  if (arr.length <= 1) {
+    setLoad(false);
+    setLoadType(false);
+    return;
+  }
+
   for (let i = 0; i < arr.length - 1; i++) {
     let tmp = arr[i].value;
     let jIndex = 0;
@@ -99,6 +105,12 @@ export const sortingBubble = async (
   setLoad: Dispatch<SetStateAction<boolean>>,
   setLoadType: Dispatch<SetStateAction<boolean>>
 ) => {
+  if (arr.length <= 1) {
+    setLoad(false);
+    setLoadType(false);
+    return;
+  }
+
   setLoad(true);
   setLoadType(true);
   for (let i = 0; i < arr.length; i++) {
