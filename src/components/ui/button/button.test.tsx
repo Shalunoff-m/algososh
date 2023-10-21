@@ -1,7 +1,7 @@
 import renderer from 'react-test-renderer';
 import { Button } from './button';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Direction } from '../../../types/direction';
+// import { render, screen, fireEvent } from '@testing-library/react';
+// import { Direction } from '../../../types/direction';
 
 describe('Проверка кнопки', () => {
   it('Кнопка с текстом', () => {
