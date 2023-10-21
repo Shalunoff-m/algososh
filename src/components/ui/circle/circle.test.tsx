@@ -2,59 +2,44 @@ import renderer from 'react-test-renderer';
 import { Circle } from './circle';
 import { ElementStates } from '../../../types/element-states';
 
+const renderAndMatchSnapshot = (component: any) => {
+  const tree = renderer.create(component).toJSON();
+  expect(tree).toMatchSnapshot();
+};
+
 describe('Проверка Circle', () => {
-  it('Circle без буквы', () => {
-    const circle = renderer.create(<Circle />).toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle с буквами', () => {
-    const circle = renderer.create(<Circle letter='Букв' />).toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle с head', () => {
-    const circle = renderer.create(<Circle head={'777'} />).toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle с react элементом в head', () => {
-    const circle = renderer
-      .create(<Circle head={<Circle isSmall={true} />} />)
-      .toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle с tail', () => {
-    const circle = renderer.create(<Circle tail={'777'} />).toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle с react элементом в tail', () => {
-    const circle = renderer
-      .create(<Circle tail={<Circle isSmall={true} />} />)
-      .toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle с index', () => {
-    const circle = renderer.create(<Circle index={777} />).toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle с пропсом isSmall ===  true', () => {
-    const circle = renderer.create(<Circle isSmall={true} />).toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle в состоянии default', () => {
-    const circle = renderer
-      .create(<Circle state={ElementStates.Default} />)
-      .toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle в состоянии changing', () => {
-    const circle = renderer
-      .create(<Circle state={ElementStates.Changing} />)
-      .toJSON();
-    expect(circle).toMatchSnapshot();
-  });
-  it('Circle в состоянии modified', () => {
-    const circle = renderer
-      .create(<Circle state={ElementStates.Modified} />)
-      .toJSON();
-    expect(circle).toMatchSnapshot();
+  const testCases = [
+    { desc: 'Circle без буквы', props: {} },
+    { desc: 'Circle с буквами', props: { letter: 'Букв' } },
+    { desc: 'Circle с head', props: { head: '777' } },
+    {
+      desc: 'Circle с react элементом в head',
+      props: { head: <Circle isSmall={true} /> },
+    },
+    { desc: 'Circle с tail', props: { tail: '777' } },
+    {
+      desc: 'Circle с react элементом в tail',
+      props: { tail: <Circle isSmall={true} /> },
+    },
+    { desc: 'Circle с index', props: { index: 777 } },
+    { desc: 'Circle с пропсом isSmall ===  true', props: { isSmall: true } },
+    {
+      desc: 'Circle в состоянии default',
+      props: { state: ElementStates.Default },
+    },
+    {
+      desc: 'Circle в состоянии changing',
+      props: { state: ElementStates.Changing },
+    },
+    {
+      desc: 'Circle в состоянии modified',
+      props: { state: ElementStates.Modified },
+    },
+  ];
+
+  testCases.forEach(({ desc, props }) => {
+    it(desc, () => {
+      renderAndMatchSnapshot(<Circle {...props} />);
+    });
   });
 });
