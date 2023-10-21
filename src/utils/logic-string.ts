@@ -1,6 +1,5 @@
 import { ElementStates } from '../types/element-states';
 import { IDataGet, IString } from '../components/string/string-interface';
-import { timeDelay } from './time-delay';
 
 const deepClone = (obj: any): any => {
   if (typeof obj !== 'object' || obj === null) {
@@ -22,10 +21,12 @@ const deepClone = (obj: any): any => {
 };
 
 export const stringReverse = ({ userText, setResult, setLoad }: IDataGet) => {
-  /* 
-  [x] По аналогии стоит вернуть шаги алгоритма по которым пройдется компонент и просто отрисует с задержкой
-   */
   // Создаем массив объектов, с индивидуальным типом
+  if (!userText) {
+    setLoad(false);
+    return [[]]; // Возвращаем пустой массив шагов или другое необходимое значение
+  }
+
   const elements = userText
     .split('')
     .map((element) => ({ element, color: ElementStates.Default }));
