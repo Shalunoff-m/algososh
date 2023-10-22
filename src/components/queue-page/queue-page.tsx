@@ -41,6 +41,10 @@ export const QueuePage: React.FC = () => {
     setInputValue(e.target.value);
   };
 
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   const doAction = async (type: string) => {
     switch (type) {
       case 'add':
@@ -76,7 +80,7 @@ export const QueuePage: React.FC = () => {
   // ВЫВОД
   return (
     <SolutionLayout title='Очередь'>
-      <form className={styles.form}>
+      <form onSubmit={submitHandler} className={styles.form}>
         <Input
           extraClass={styles.input}
           type='text'
