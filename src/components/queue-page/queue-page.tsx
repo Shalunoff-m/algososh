@@ -118,24 +118,26 @@ export const QueuePage: React.FC = () => {
         />
       </form>
       <div className={styles.list}>
-        {array.map((letter, i) => (
-          <Circle
-            head={i === userQueue.head && letter ? 'head' : ''}
-            tail={i === userQueue.tail - 1 && letter ? 'tail' : ''}
-            letter={letter}
-            key={i}
-            index={i}
-            state={
-              actionType === 'push'
-                ? i === userQueue.tail
-                  ? animationColor
-                  : ElementStates.Default
-                : i === userQueue.head
-                ? animationColor
-                : ElementStates.Default
-            }
-          />
-        ))}
+        {array.length > 0
+          ? array.map((letter, i) => (
+              <Circle
+                head={i === userQueue.head && letter ? 'head' : ''}
+                tail={i === userQueue.tail - 1 && letter ? 'tail' : ''}
+                letter={letter}
+                key={i}
+                index={i}
+                state={
+                  actionType === 'push'
+                    ? i === userQueue.tail
+                      ? animationColor
+                      : ElementStates.Default
+                    : i === userQueue.head
+                    ? animationColor
+                    : ElementStates.Default
+                }
+              />
+            ))
+          : null}
       </div>
     </SolutionLayout>
   );

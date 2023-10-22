@@ -225,4 +225,5 @@ export const example = [
   { value: '0', color: ElementStates.Default },
   { value: '1', color: ElementStates.Default },
   { value: '2', color: ElementStates.Default },
+  { value: '3', color: ElementStates.Default },
 ];

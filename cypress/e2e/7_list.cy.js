@@ -1,4 +1,5 @@
-import { CIRCLE_BOX, BASE_URL } from '../constant/constant';
+import { CIRCLE_BOX, BASE_URL, CIRCLE } from '../constant/constant';
+import { SHORT_DELAY_IN_MS } from '../../src/constants/delays';
 
 describe("Тесты на функциональность страницы 'Лист'", function () {
   beforeEach(function () {
@@ -25,5 +26,46 @@ describe("Тесты на функциональность страницы 'Л�
     cy.get('@removeBtnIndex').should('be.disabled');
     cy.get('@removeBtnHead').should('be.enabled');
     cy.get('@removeBtnTail').should('be.enabled');
+  });
+
+  it('Корректное отображение стартового списка', function () {
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get('@circles').should('have.length', 4);
+    cy.get('@circles').find(CIRCLE).as('circle');
+    cy.get('@circle').should('have.css', 'border-color', 'rgb(0, 50, 255)');
+    cy.get('@circles').eq(0).contains(0);
+    cy.get('@circles').eq(0).contains('head');
+    cy.get('@circles').eq(1).contains(1);
+    cy.get('@circles').eq(2).contains(2);
+    cy.get('@circles').eq(3).contains(3);
+    cy.get('@circles').eq(3).contains('tail');
+  });
+
+  it('Корректное добавление в head', function () {
+    const CHANGING_COLOR = 'rgb(210, 82, 225)';
+    const INITIAL_COLOR = 'rgb(127, 224, 81)';
+    const DEFAULT_COLOR = 'rgb(0, 50, 255)';
+
+    const checkCircleColor = (index, color) => {
+      cy.get('@circles')
+        .eq(index)
+        .find(CIRCLE)
+        .should('have.css', 'border-color', color);
+    };
+
+    cy.get('@inputText').type(24);
+    cy.get('@addBtnHead').should('be.enabled').click();
+
+    checkCircleColor(0, CHANGING_COLOR);
+    cy.get('@circles').eq(0).should('contain', 24);
+
+    checkCircleColor(0, INITIAL_COLOR);
+
+    cy.get('@circles').should('have.length', 5);
+
+    checkCircleColor(0, DEFAULT_COLOR);
+
+    cy.get('@circles').eq(0).should('contain', 24);
+    cy.get('@circles').eq(0).should('contain', 'head');
   });
 });
