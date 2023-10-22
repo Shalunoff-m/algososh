@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './string-page.module.css';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { Input } from '../ui/input/input';
@@ -17,9 +17,16 @@ export const StringComponent: React.FC = () => {
   const [result, setResult] = useState<IString[]>([]);
   // Стейт лоадера
   const [isLoad, setLoad] = useState(false);
+  const [isDisabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    setDisabled(true);
+  }, []);
 
   const changeUserString = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setUserText(evt.target.value);
+    if (userText !== '') setDisabled(false);
+    else setDisabled(true);
   };
 
   const runCalculate = async () => {
@@ -47,7 +54,7 @@ export const StringComponent: React.FC = () => {
         <Button
           text='Развернуть'
           isLoader={isLoad}
-          disabled={false}
+          disabled={isDisabled}
           onClick={runCalculate}
         />
       </div>
