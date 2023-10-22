@@ -12,4 +12,12 @@ describe('Проверка роутинга', function () {
     cy.location('pathname').should('eq', '/');
     cy.contains('Вдохновлено школами, в которых не учили алгоритмам');
   });
+  it('Фибоначи доступно', function () {
+    cy.get("[href='/fibonacci']").click();
+    cy.location('pathname').should('eq', '/fibonacci');
+    cy.contains('Последовательность Фибоначчи');
+    cy.contains('К оглавлению').click();
+    cy.location('pathname').should('eq', '/');
+    cy.contains('Вдохновлено школами, в которых не учили алгоритмам');
+  });
 });
