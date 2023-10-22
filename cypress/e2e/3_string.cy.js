@@ -8,7 +8,7 @@ import {
 
 import { SHORT_DELAY_IN_MS } from '../../src/constants/delays';
 
-describe("Переход на страницу 'Строка' выполняется корректно", function () {
+describe("Проверка алгоритмов на странице 'Строка'", function () {
   beforeEach(function () {
     cy.visit(BASE_URL);
     cy.get("[href='/recursion']").click();
