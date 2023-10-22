@@ -68,14 +68,16 @@ export const StackPage: React.FC = () => {
         </div>
       </div>
       <div className={styles.circle_list}>
-        {stackArr?.map((item, i) => (
-          <Circle
-            key={i}
-            letter={item.value}
-            state={item.color}
-            head={takeTop(i, stackArr)}
-          />
-        ))}
+        {stackArr.length > 0
+          ? stackArr?.map((item, i) => (
+              <Circle
+                key={i}
+                letter={item.value}
+                state={item.color}
+                head={takeTop(i, stackArr)}
+              />
+            ))
+          : null}
       </div>
     </SolutionLayout>
   );
