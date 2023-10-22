@@ -20,10 +20,18 @@ describe('Проверка роутинга', function () {
     cy.location('pathname').should('eq', '/');
     cy.contains('Вдохновлено школами, в которых не учили алгоритмам');
   });
-  it('Сортировка массива доступно', function () {
+  it('Сортировка массива доступна', function () {
     cy.get("[href='/sorting']").click();
     cy.location('pathname').should('eq', '/sorting');
     cy.contains('Сортировка массива');
+    cy.contains('К оглавлению').click();
+    cy.location('pathname').should('eq', '/');
+    cy.contains('Вдохновлено школами, в которых не учили алгоритмам');
+  });
+  it('Стек доступен для перехода', function () {
+    cy.get("[href='/stack']").click();
+    cy.location('pathname').should('eq', '/stack');
+    cy.contains('Стек');
     cy.contains('К оглавлению').click();
     cy.location('pathname').should('eq', '/');
     cy.contains('Вдохновлено школами, в которых не учили алгоритмам');
