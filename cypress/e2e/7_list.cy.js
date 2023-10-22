@@ -2,6 +2,10 @@ import { CIRCLE_BOX, BASE_URL, CIRCLE } from '../constant/constant';
 import { SHORT_DELAY_IN_MS } from '../../src/constants/delays';
 
 describe("Тесты на функциональность страницы 'Лист'", function () {
+  const CHANGING_COLOR = 'rgb(210, 82, 225)';
+  const INITIAL_COLOR = 'rgb(127, 224, 81)';
+  const DEFAULT_COLOR = 'rgb(0, 50, 255)';
+
   beforeEach(function () {
     cy.visit(BASE_URL);
     cy.get("[href='/list']").click();
@@ -42,10 +46,6 @@ describe("Тесты на функциональность страницы 'Л�
   });
 
   it('Корректное добавление в head', function () {
-    const CHANGING_COLOR = 'rgb(210, 82, 225)';
-    const INITIAL_COLOR = 'rgb(127, 224, 81)';
-    const DEFAULT_COLOR = 'rgb(0, 50, 255)';
-
     const checkCircleColor = (index, color) => {
       cy.get('@circles')
         .eq(index)
@@ -67,5 +67,104 @@ describe("Тесты на функциональность страницы 'Л�
 
     cy.get('@circles').eq(0).should('contain', 24);
     cy.get('@circles').eq(0).should('contain', 'head');
+  });
+
+  it('Корректное добавление в tail', function () {
+    const checkCircleAtIndex = (index, color, content) => {
+      cy.get('@circles')
+        .eq(index)
+        .find(CIRCLE)
+        .should('have.css', 'border-color', color)
+        .and('contain', content);
+    };
+
+    cy.get('@inputText').type(24);
+    cy.get('@addBtnTail').should('be.enabled').click();
+
+    checkCircleAtIndex(3, CHANGING_COLOR, 24);
+
+    cy.get('@circles').should('have.length', 5);
+
+    checkCircleAtIndex(4, INITIAL_COLOR, 24);
+
+    checkCircleAtIndex(4, DEFAULT_COLOR, 24);
+    cy.get('@circles').eq(4).should('contain', 'tail');
+  });
+
+  it('Корректное удаление эл-та из head', function () {
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get('@inputText').type(24);
+    cy.get('@addBtnHead').should('be.enabled').click();
+    cy.get('@circles').should('have.length', 5);
+    cy.get('@removeBtnHead').should('be.enabled').click();
+    cy.get('@circles')
+      .eq(0)
+      .find(CIRCLE)
+      .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get('@circles').should('have.length', 4);
+    cy.get('@circles').eq(0).contains(0);
+    cy.get('@circles').eq(0).contains('head');
+    cy.get('@circles')
+      .eq(0)
+      .find(CIRCLE)
+      .should('have.css', 'border-color', 'rgb(0, 50, 255)');
+  });
+
+  it('Корректное удаление эл-та из tail', function () {
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get('@inputText').type(24);
+    cy.get('@addBtnTail').should('be.enabled').click();
+    cy.get('@circles').should('have.length', 5);
+    cy.get('@removeBtnTail').should('be.enabled').click();
+    cy.get('@circles')
+      .eq(4)
+      .find(CIRCLE)
+      .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+    cy.get('@circles').should('have.length', 4);
+    cy.get('@circles').eq(3).contains(3);
+    cy.get('@circles').eq(3).contains('tail');
+    cy.get('@circles')
+      .eq(3)
+      .find(CIRCLE)
+      .should('have.css', 'border-color', 'rgb(0, 50, 255)');
+  });
+
+  it('Корректное добавление эл-та по индексу', function () {
+    cy.get('@inputText').type(24);
+    cy.get('@inputIndex').type(2);
+    cy.get('@circles').should('have.length', 4);
+    cy.get('@addBtnIndex').should('be.enabled').click();
+    cy.get('@circles')
+      .eq(0)
+      .find(CIRCLE)
+      .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get('@circles')
+      .eq(0)
+      .find(CIRCLE)
+      .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+    cy.get('@circles').eq(0).contains('head');
+    cy.get('@circles').eq(0).contains(0);
+    cy.get('@circles')
+      .eq(1)
+      .find(CIRCLE)
+      .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+    cy.get('@circles').eq(1).contains(24);
+    cy.get('@circles')
+      .eq(1)
+      .find(CIRCLE)
+      .should('have.css', 'border-color', 'rgb(0, 50, 255)')
+      .contains(1);
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get('@circles').eq(2).contains(24);
+    cy.get('@circles').should('have.length', 5);
+  });
+
+  it('Корректное удаление эл-та по индексу', function () {
+    cy.get('@inputIndex').type(2);
+    cy.get('@circles').should('have.length', 4);
+    cy.get('@removeBtnIndex').should('be.enabled').click();
+    cy.get('@circles').eq(2).contains(3);
   });
 });
