@@ -1,9 +1,12 @@
 import {
   BASE_URL,
+  BUTTON,
   CHANGING_STATE,
   CIRCLE,
   CIRCLE_BOX,
   DEFAULT_STATE,
+  RESET_BUTTON,
+  SUBMIT_BUTTON,
 } from '../constant/constant';
 import { SHORT_DELAY_IN_MS } from '../../src/constants/delays';
 
@@ -53,5 +56,53 @@ describe('Тесты страницы "Очередь"', function () {
         'tail'
       );
     }
+  });
+
+  it('Корректное удаление элемента', function () {
+    const fillInputAndSubmit = (value) => {
+      cy.get("input[type='text']").type(value);
+      cy.get(SUBMIT_BUTTON).should('not.be.disabled').click();
+      cy.wait(SHORT_DELAY_IN_MS);
+    };
+
+    for (let i = 1; i < 4; i++) {
+      fillInputAndSubmit(i);
+    }
+
+    cy.get(`${BUTTON}[class^="text"]`).should('not.be.disabled').click();
+    cy.get('[class^="queue-page_list"]')
+      .find(CIRCLE_BOX)
+      .find(CIRCLE)
+      .as('allCircle');
+
+    cy.get('@allCircle')
+      .eq(0)
+      .should('have.css', 'border', CHANGING_STATE)
+      .wait(SHORT_DELAY_IN_MS)
+      .should('contain', '');
+
+    cy.get(`[class^="queue-page_list"] ${CIRCLE_BOX}:eq(1)`).should(
+      'contain',
+      'head'
+    );
+  });
+
+  it('Корректная очистка очереди', function () {
+    const fillInputAndSubmit = (value) => {
+      cy.get('input').type(value);
+      cy.get(SUBMIT_BUTTON).should('not.be.disabled').click();
+      cy.wait(SHORT_DELAY_IN_MS);
+    };
+
+    for (let i = 1; i < 4; i++) {
+      fillInputAndSubmit(i);
+    }
+
+    cy.get(RESET_BUTTON).should('not.be.disabled').click();
+
+    cy.get('[class^="queue-page_list"]')
+      .find(CIRCLE_BOX)
+      .find(CIRCLE)
+      .should('contain', '');
   });
 });
