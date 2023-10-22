@@ -44,4 +44,12 @@ describe('Проверка роутинга', function () {
     cy.location('pathname').should('eq', '/');
     cy.contains('Вдохновлено школами, в которых не учили алгоритмам');
   });
+  it('Связный список доступен для перехода', function () {
+    cy.get("[href='/list']").click();
+    cy.location('pathname').should('eq', '/list');
+    cy.contains('Связный список');
+    cy.contains('К оглавлению').click();
+    cy.contains('Вдохновлено школами, в которых не учили алгоритмам');
+    cy.location('pathname').should('eq', '/');
+  });
 });
