@@ -13,9 +13,11 @@ export const FibonacciPage: React.FC = () => {
   const [isLoad, setLoad] = useState(false);
   const [userText, setUserText] = useState<string>('');
   const [result, setResult] = useState<string[]>([]);
+  const [btnDisabled, setBtnDisabled] = useState(true);
 
   const changeUserString = (evt: React.ChangeEvent<HTMLInputElement>) => {
     let { value } = evt.target;
+    value ? setBtnDisabled(false) : setBtnDisabled(true);
     if (Number(value) > 19) value = '19';
     setUserText(value);
   };
@@ -45,7 +47,7 @@ export const FibonacciPage: React.FC = () => {
         <Button
           text='Рассчитать'
           isLoader={isLoad}
-          disabled={false}
+          disabled={btnDisabled}
           onClick={renderResult}
         />
       </div>
